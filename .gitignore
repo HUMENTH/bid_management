@@ -1,7 +1,0 @@
-.DS_Store
-*.pyc
-*.egg-info
-*.swp
-tags
-bid_management/docs/current
-node_modules/
