@@ -12,6 +12,7 @@ app_license = "mit"
 # include js, css files in header of desk.html
 # app_include_css = "/assets/bid_management/css/bid_management.css"
 # app_include_js = "/assets/bid_management/js/bid_management.js"
+app_include_js = "/assets/bid_management/js/globally_changes.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/bid_management/css/bid_management.css"
