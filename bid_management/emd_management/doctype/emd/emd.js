@@ -24,7 +24,7 @@ frappe.ui.form.on('EMD', {
 	mode_of_payment: function(frm){
 		frappe.call({
 			// doc: frm.doc.mode_of_payment,
-			method: "emd_management.emd_management.doctype.emd.emd.get_bank_account",
+			method: "bid_management.emd_management.doctype.emd.emd.get_bank_account",
 			args: {
 				mode_of_payment: frm.doc.mode_of_payment 
 			},
@@ -122,7 +122,7 @@ frappe.ui.form.on('EMD', {
 
 	customer:function(frm){
 		frappe.call({
-			method:"emd_management.api.get_party_details",
+			method:"bid_management.api.get_party_details",
 			args:{
 				party:frm.doc.customer,
 				party_type:"Customer"
