@@ -33,7 +33,10 @@ app_license = "mit"
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 doctype_list_js = {"EMD" : "bid_management/emd_management/doctype/emd/emd_list.js"}
-doctype_js = {"Journal Entry": "public/js/journal_entry.js"}
+doctype_js = {"Journal Entry": "public/js/journal_entry.js",
+              "Tender":"bid_management/bid_management/doctype/tender/tender.js"
+			  }
+
 
 # Svg Icons
 # ------------------
