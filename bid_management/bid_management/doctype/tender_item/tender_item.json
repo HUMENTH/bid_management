@@ -94,16 +94,18 @@
   {
    "fetch_from": "reporting_officer.phone",
    "fieldname": "phone",
-   "fieldtype": "Phone",
+   "fieldtype": "Data",
    "label": "Phone",
-   "read_only": 1
+   "read_only": 1,
+   "options":"Phone"
   },
   {
    "fetch_from": "reporting_officer.mobile_no",
    "fieldname": "mobile",
-   "fieldtype": "Phone",
+   "fieldtype": "Data",
    "label": "Mobile",
-   "read_only": 1
+   "read_only": 1,
+    "options":"Phone"
   }
  ],
  "istable": 1,

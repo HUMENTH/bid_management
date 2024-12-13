@@ -1,7 +1,15 @@
+
+
 frappe.ui.form.on('Tender', {
+    submission_deadline: function (frm) {
+        calculate_validity_end_date(frm);
+    },
+    tender_validity: function (frm) {
+        calculate_validity_end_date(frm);
+    },
     onload: function(frm) {
         // Set dynamic filters
-        if (frm.doc.organization) {
+        
             frm.set_query('contact_person', function() {
                 return {
                     filters: {
@@ -37,11 +45,11 @@ frappe.ui.form.on('Tender', {
                     }
                 };
             });
-        }
+        
     },
 
     refresh: function(frm) {
-        if (frm.doc.docstatus === 0) {
+        if (frm.doc.docstatus === 0 && !frm.doc.__islocal) {
             // Add custom buttons
             frm.add_custom_button(__('EMD'), () => frm.events.make_emd(frm), __('Create'));
             frm.add_custom_button(__('Quotation'), () => frm.events.make_quotation(frm), __('Create'));
@@ -113,3 +121,13 @@ frappe.ui.form.on('Tender Item', {
         }
     }
 });
+
+function calculate_validity_end_date(frm) {
+    if (frm.doc.submission_deadline && frm.doc.tender_validity) {
+        const submission_deadline = frappe.datetime.str_to_obj(frm.doc.submission_deadline);
+        const validity_end_date = frappe.datetime.add_days(submission_deadline, frm.doc.tender_validity);
+        frm.set_value('validity_end_date', frappe.datetime.obj_to_str(validity_end_date));
+    } else {
+        frm.set_value('validity_end_date', null); 
+    }
+}

@@ -1,0 +1,63 @@
+[
+    {
+        "doctype": "Custom Field",
+        "dt": "Quotation",
+        "module": "Bid Management",
+        "name": "Quotation-tender",
+        "fieldname": "tender",
+        "fieldtype": "Link",
+        "label": "Tender",
+        "options": "Tender",
+        "insert_after": "company",
+        "__islocal": 1
+    },
+    {
+        "doctype": "Custom Field",
+        "dt": "EMD",
+        "module": "Bid Management",
+        "name": "EMD-tender",
+        "fieldname": "tender",
+        "fieldtype": "Link",
+        "label": "Tender",
+        "options": "Tender",
+        "insert_after": "company",
+        "__islocal": 1
+    },       
+    {
+        "doctype": "Custom Field",
+        "dt": "Sales Order",
+        "module": "Bid Management",
+        "name": "Sales-Order-tender",
+        "fieldname": "tender",
+        "fieldtype": "Link",
+        "label": "Tender",
+        "options": "Tender",
+        "insert_after": "company",
+        "__islocal": 1
+    },
+    {
+        "doctype": "Custom Field",
+        "dt": "Project",
+        "module": "Bid Management",
+        "name": "Project-tender",
+        "fieldname": "tender",
+        "fieldtype": "Link",
+        "label": "Tender",
+        "options": "Tender",
+        "insert_after": "company",
+        "__islocal": 1
+    },
+    {
+        "doctype": "Custom Field",
+        "dt": "Bank Guarantee",
+        "module": "Bid Management",
+        "name": "Bank-Guarantee-tender",
+        "fieldname": "tender",
+        "fieldtype": "Link",
+        "label": "Tender",
+        "options": "Tender",
+        "insert_after": "company",
+        "__islocal": 1
+    }
+    
+]

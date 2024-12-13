@@ -13,30 +13,29 @@
   "office_name",
   "description",
   "column_break_xubfy",
-  "tender_no",
   "type",
   "source",
   "tender_owner",
-  "column_break_kkcc5",
-  "tender_validity",
-  "expiry_date",
-  "submission_deadline",
   "company",
+  "column_break_kkcc5",
+  "publish_date",
+  "submission_deadline",
+  "bid_opening_date",
+  "tender_validity",
+  "validity_end_date",
   "tender_stage",
+  "status",
   "section_break_yjef",
   "mse_purchase_preference",
   "mii_purchase_preference",
+  "column_break_cdxi",
   "inspection_required",
   "bid_to_ra_enabled",
   "column_break_nizu",
   "pre_bid_conference",
+  "column_break_vncz",
   "pre_bid_conference_date",
   "pre_bid_conference_venue",
-  "section_break_lgvnz",
-  "emd",
-  "quotation",
-  "column_break_67jkb",
-  "status",
   "submission_date",
   "reason_for_reject",
   "section_break_ctej",
@@ -46,8 +45,6 @@
   "column_break_pnvi",
   "estimated_tender_amount",
   "estimated_tender_amount_company_currency",
-  "price_bid_opening_section",
-  "price_bid_opening",
   "contact_tab",
   "primary_contact_section",
   "contact_person",
@@ -60,57 +57,41 @@
   "items",
   "queries_tab",
   "query",
+  "price_bid_tab",
+  "price_bid_opening_section",
+  "price_bid_opening",
   "more_info_tab",
   "additional_info_section",
+  "amended_from",
+  "connections",
+  "section_break_lgvnz",
+  "tender_no",
+  "emd",
   "project",
+  "column_break_67jkb",
   "sales_order",
-  "column_break_qlbje",
   "bank_guarantee",
-  "connections_tab"
+  "quotation"
  ],
  "fields": [
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Series",
-   "options": "TDR-"
+   "options": "TDR-.YYYY.-"
   },
   {
-   "fieldname": "column_break_xubfy",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "tender_no",
-   "fieldtype": "Data",
-   "in_global_search": 1,
+   "fieldname": "organization",
+   "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Tender No",
-   "reqd": 1,
-   "search_index": 1
+   "label": "Organization",
+   "options": "Customer",
+   "reqd": 1
   },
   {
-   "fieldname": "column_break_kkcc5",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval:doc.pre_bid_conference==\"Yes\";",
-   "fieldname": "pre_bid_conference_date",
-   "fieldtype": "Datetime",
-   "label": "Pre Bid Conference Date"
-  },
-  {
-   "depends_on": "eval:doc.pre_bid_conference==\"Yes\";",
-   "fieldname": "pre_bid_conference_venue",
-   "fieldtype": "Small Text",
-   "label": "Pre Bid Conference Venue"
-  },
-  {
-   "fieldname": "section_break_lgvnz",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_67jkb",
-   "fieldtype": "Column Break"
+   "fieldname": "office_name",
+   "fieldtype": "Data",
+   "label": "Office Name"
   },
   {
    "fieldname": "description",
@@ -118,37 +99,7 @@
    "label": "Description"
   },
   {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "Open\nClosed\nBid Submitted\nUnder Evaluation\nAwarded\nCancelled\nOn Hold\nRejected"
-  },
-  {
-   "fieldname": "price_bid_opening_section",
-   "fieldtype": "Section Break",
-   "label": "Price Bid Opening",
-   "options": "fa fa-file-text"
-  },
-  {
-   "fieldname": "price_bid_opening",
-   "fieldtype": "Table",
-   "label": "Price Bid Opening",
-   "options": "Price Bid Opening"
-  },
-  {
-   "depends_on": "eval:!doc.__islocal",
-   "fieldname": "queries_tab",
-   "fieldtype": "Tab Break",
-   "label": "Queries"
-  },
-  {
-   "fieldname": "query",
-   "fieldtype": "Table",
-   "label": "Query",
-   "options": "Query"
-  },
-  {
-   "fieldname": "column_break_qlbje",
+   "fieldname": "column_break_xubfy",
    "fieldtype": "Column Break"
   },
   {
@@ -164,90 +115,67 @@
    "options": "\nDirect\nGeM\nOther"
   },
   {
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company"
-  },
-  {
-   "depends_on": "eval:doc.status !== \"Open\" && doc.status !== \"Closed\" && doc.status !== \"Cancelled\" && doc.status !== \"Rejected\";",
-   "fieldname": "submission_date",
-   "fieldtype": "Datetime",
-   "label": "Submission Date",
-   "read_only_depends_on": "eval:doc.status==\"Under Evaluation\" && doc.status==\"Awarded\";"
-  },
-  {
-   "fieldname": "more_info_tab",
-   "fieldtype": "Tab Break",
-   "label": "More Info"
-  },
-  {
-   "fieldname": "sales_order",
-   "fieldtype": "Link",
-   "label": "Sales Order",
-   "options": "Sales Order"
-  },
-  {
-   "fieldname": "additional_info_section",
-   "fieldtype": "Section Break",
-   "label": "Additional Info"
-  },
-  {
-   "fieldname": "project",
-   "fieldtype": "Link",
-   "label": "Project",
-   "options": "Project"
-  },
-  {
-   "fieldname": "primary_contact_section",
-   "fieldtype": "Section Break",
-   "label": "Contact"
-  },
-  {
-   "fieldname": "contact_person",
-   "fieldtype": "Link",
-   "label": "Contact Person",
-   "options": "Contact"
-  },
-  {
-   "fieldname": "column_break_qdnm",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "contact_email",
-   "fieldtype": "Data",
-   "label": "Contact Email"
-  },
-  {
-   "fieldname": "contact_mobile",
-   "fieldtype": "Data",
-   "label": "Contact Mobile"
-  },
-  {
-   "fieldname": "phone",
-   "fieldtype": "Data",
-   "label": "Phone"
-  },
-  {
-   "fieldname": "column_break_imaf",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "items_tab",
-   "fieldtype": "Tab Break",
-   "label": "Items"
-  },
-  {
    "fieldname": "tender_owner",
    "fieldtype": "Link",
    "label": "Tender Owner",
    "options": "User"
   },
   {
-   "fieldname": "emd",
+   "fieldname": "company",
    "fieldtype": "Link",
-   "label": "EMD",
-   "options": "EMD"
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "column_break_kkcc5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "publish_date",
+   "fieldtype": "Date",
+   "label": "Publish Date"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "submission_deadline",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Submission Deadline",
+   "reqd": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "bid_opening_date",
+   "fieldtype": "Datetime",
+   "label": "Bid Opening Date"
+  },
+  {
+   "fieldname": "tender_validity",
+   "fieldtype": "Int",
+   "label": "Tender Validity (Days)"
+  },
+  {
+   "fieldname": "validity_end_date",
+   "fieldtype": "Date",
+   "label": "Validity End Date",
+   "read_only": 1
+  },
+  {
+    "fieldname": "tender_stage",
+    "fieldtype": "Select",
+    "in_list_view": 1,
+    "label": "Tender Stage",
+    "options": "\nTechnical Evaluation\nFinancial Bid Opening\nFinancial Evaluation\nNegotiation\nReverse Auction\nContract Awarded",
+    "allow_on_submit": 1,
+    "depends_on": "eval:doc.status != 'Open' && doc.docstatus == 1"
+    },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Open\nClosed\nSubmitted\nWon\nLost\nCancelled\nOn Hold\nRegret",
+   "reqd": 1
   },
   {
    "fieldname": "section_break_yjef",
@@ -266,24 +194,60 @@
    "options": "\nYes\nNo"
   },
   {
-   "fieldname": "column_break_nizu",
+   "fieldname": "column_break_cdxi",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "tender_validity",
-   "fieldtype": "Int",
-   "label": "Tender Validity (in days)"
-  },
-  {
-   "fieldname": "expiry_date",
-   "fieldtype": "Read Only",
-   "label": "Expiry Date"
+   "fieldname": "inspection_required",
+   "fieldtype": "Select",
+   "label": "Inspection Required",
+   "options": "No\nFirst Party\nThird Party"
   },
   {
    "fieldname": "bid_to_ra_enabled",
    "fieldtype": "Select",
    "label": "Bid to RA Enabled",
    "options": "\nYes\nNo"
+  },
+  {
+   "fieldname": "column_break_nizu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "pre_bid_conference",
+   "fieldtype": "Select",
+   "label": "Pre Bid Conference",
+   "options": "\nYes\nNo"
+  },
+  {
+   "fieldname": "column_break_vncz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.pre_bid_conference==\"Yes\";",
+   "fieldname": "pre_bid_conference_date",
+   "fieldtype": "Datetime",
+   "label": "Pre Bid Conference Date"
+  },
+  {
+   "depends_on": "eval:doc.pre_bid_conference==\"Yes\";",
+   "fieldname": "pre_bid_conference_venue",
+   "fieldtype": "Small Text",
+   "label": "Pre Bid Conference Venue"
+  },
+  {
+   "depends_on": "eval:doc.status == \"Bid Submitted\";",
+   "fieldname": "submission_date",
+   "fieldtype": "Datetime",
+   "label": "Submission Date",
+   "mandatory_depends_on": "eval:doc.status == \"Bid Submitted\";",
+   "read_only_depends_on": "eval:doc.status==\"Won\";"
+  },
+  {
+   "depends_on": "eval:doc.status==\"Rejected\";",
+   "fieldname": "reason_for_reject",
+   "fieldtype": "Data",
+   "label": "Reason for Reject"
   },
   {
    "collapsible": 1,
@@ -321,57 +285,52 @@
    "label": "Estimated Tender Amount (Company Currency)"
   },
   {
-   "fieldname": "submission_deadline",
-   "fieldtype": "Datetime",
-   "in_list_view": 1,
-   "label": "Submission Deadline",
-   "reqd": 1
-  },
-  {
-   "fieldname": "bank_guarantee",
-   "fieldtype": "Link",
-   "label": "Bank Guarantee",
-   "options": "Bank Guarantee"
-  },
-  {
-   "fieldname": "inspection_required",
-   "fieldtype": "Select",
-   "label": "Inspection Required",
-   "options": "No\nFirst Party\nThird Party"
-  },
-  {
-   "fieldname": "office_name",
-   "fieldtype": "Data",
-   "label": "Office Name"
-  },
-  {
    "fieldname": "contact_tab",
    "fieldtype": "Tab Break",
    "label": "Contact"
   },
   {
-   "fieldname": "quotation",
+   "fieldname": "primary_contact_section",
+   "fieldtype": "Section Break",
+   "label": "Contact"
+  },
+  {
+   "fieldname": "contact_person",
    "fieldtype": "Link",
-   "label": "Bid/Quotation",
-   "options": "Quotation"
+   "label": "Contact Person",
+   "options": "Contact"
   },
   {
-   "fieldname": "pre_bid_conference",
-   "fieldtype": "Select",
-   "label": "Pre Bid Conference",
-   "options": "\nYes\nNo"
+   "fieldname": "column_break_qdnm",
+   "fieldtype": "Column Break"
   },
   {
-   "fieldname": "tender_stage",
-   "fieldtype": "Select",
-   "label": "Tender Stage",
-   "options": "\nTechnical Evaluation\nFinancial Bid Opening\nFinancial Evaluation\nNegotiation\nReverse Auction\nContract Awarded"
-  },
-  {
-   "depends_on": "eval:doc.status==\"Rejected\";",
-   "fieldname": "reason_for_reject",
+   "fetch_from": "contact_person.email_id",
+   "fieldname": "contact_email",
    "fieldtype": "Data",
-   "label": "Reason for Reject"
+   "label": "Contact Email"
+  },
+  {
+   "fieldname": "column_break_imaf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "contact_person.mobile_no",
+   "fieldname": "contact_mobile",
+   "fieldtype": "Data",
+   "options":"Phone",
+   "label": "Contact Mobile"
+  },
+  {
+   "fetch_from": "contact_person.phone",
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone"
+  },
+  {
+   "fieldname": "items_tab",
+   "fieldtype": "Tab Break",
+   "label": "Items"
   },
   {
    "fieldname": "items",
@@ -380,24 +339,142 @@
    "options": "Tender Item"
   },
   {
-   "fieldname": "organization",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Organization",
-   "options": "Customer",
-   "reqd": 1
+   "depends_on": "eval:!doc.__islocal",
+   "fieldname": "queries_tab",
+   "fieldtype": "Tab Break",
+   "label": "Queries"
   },
   {
-   "fieldname": "connections_tab",
+   "fieldname": "query",
+   "fieldtype": "Table",
+   "label": "Query",
+   "options": "Query"
+  },
+  {
+   "depends_on": "eval:doc.docstatus==1;",
+   "fieldname": "price_bid_tab",
+   "fieldtype": "Tab Break",
+   "label": "Price Bid"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "price_bid_opening_section",
+   "fieldtype": "Section Break",
+   "label": "Price Bid Opening",
+   "options": "fa fa-file-text"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "price_bid_opening",
+   "fieldtype": "Table",
+   "label": "Price Bid Opening",
+   "options": "Price Bid Opening"
+  },
+  {
+   "fieldname": "more_info_tab",
+   "fieldtype": "Tab Break",
+   "label": "More Info"
+  },
+  {
+   "fieldname": "additional_info_section",
+   "fieldtype": "Section Break",
+   "label": "Additional Info"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Tender",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "connections",
    "fieldtype": "Tab Break",
    "label": "Connections",
    "show_dashboard": 1
+  },
+  {
+   "fieldname": "section_break_lgvnz",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "tender_no",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "label": "Tender No",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "emd",
+   "fieldtype": "Link",
+   "label": "EMD",
+   "options": "EMD"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fieldname": "column_break_67jkb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sales_order",
+   "fieldtype": "Link",
+   "label": "Sales Order",
+   "options": "Sales Order"
+  },
+  {
+   "fieldname": "bank_guarantee",
+   "fieldtype": "Link",
+   "label": "Bank Guarantee",
+   "options": "Bank Guarantee"
+  },
+  {
+   "fieldname": "quotation",
+   "fieldtype": "Link",
+   "label": "Bid/Quotation",
+   "options": "Quotation"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_calendar_and_gantt": 1,
- "links": [],
- "modified": "2024-10-05 17:30:42.576234",
+ "is_submittable": 1,
+ "links": [
+  {
+   "group": "Quotation",
+   "link_doctype": "Quotation",
+   "link_fieldname": "tender"
+  },
+  {
+   "group": "EMD",
+   "link_doctype": "EMD",
+   "link_fieldname": "tender"
+  },
+  {
+   "group": "Sales Order",
+   "link_doctype": "Sales Order",
+   "link_fieldname": "tender"
+  },
+  {
+   "group": "Project",
+   "link_doctype": "Project",
+   "link_fieldname": "tender"
+  },
+  {
+   "group": "Bank Guarantee",
+   "link_doctype": "Bank Guarantee",
+   "link_fieldname": "tender"
+  }
+ ],
+ "modified": "2024-12-11 01:35:06.621206",
  "modified_by": "Administrator",
  "module": "Bid Management",
  "name": "Tender",
@@ -448,6 +525,7 @@
    "write": 1
   }
  ],
+ "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],

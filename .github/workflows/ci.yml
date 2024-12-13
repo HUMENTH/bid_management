@@ -1,4 +1,3 @@
-
 name: CI
 
 on:
@@ -50,8 +49,11 @@ jobs:
           node-version: 18
           check-latest: true
 
+      - name: Install Yarn
+        run: npm install -g yarn
+
       - name: Cache pip
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/*requirements.txt', '**/pyproject.toml', '**/setup.py', '**/setup.cfg') }}
@@ -61,7 +63,7 @@ jobs:
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: 'echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT'
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
 
       - uses: actions/cache@v3
         id: yarn-cache
@@ -72,14 +74,35 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install MariaDB Client
-        run: sudo apt-get install mariadb-client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mariadb-client
+
+      - name: Wait for MariaDB
+        run: |
+          for i in {1..30}; do
+            if mariadb --host 127.0.0.1 --port 3306 -u root -proot -e "SELECT 1;" > /dev/null 2>&1; then
+              echo "MariaDB is ready!"
+              break
+            fi
+            echo "Waiting for MariaDB..."
+            sleep 2
+          done
 
       - name: Setup
         run: |
           pip install frappe-bench
-          bench init --skip-redis-config-generation --skip-assets --python "$(which python)" ~/frappe-bench
+          # Specify the frappe branch if you target a specific version
+          bench init --skip-redis-config-generation --skip-assets --python "$(which python)" --frappe-branch version-15 ~/frappe-bench
           mariadb --host 127.0.0.1 --port 3306 -u root -proot -e "SET GLOBAL character_set_server = 'utf8mb4'"
           mariadb --host 127.0.0.1 --port 3306 -u root -proot -e "SET GLOBAL collation_server = 'utf8mb4_unicode_ci'"
+
+      - name: Debug Versions
+        run: |
+          python --version
+          node --version
+          yarn --version
+          bench --version
 
       - name: Install
         working-directory: /home/runner/frappe-bench
