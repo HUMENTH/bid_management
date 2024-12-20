@@ -108,7 +108,7 @@ jobs:
         working-directory: /home/runner/frappe-bench
         run: |
           bench get-app bid_management $GITHUB_WORKSPACE
-          bench get-app erpnext
+          bench get-app erpnext --branch version-15
           bench setup requirements --dev
           bench new-site --db-root-password root --admin-password admin test_site
           bench --site test_site install-app erpnext
