@@ -113,6 +113,7 @@ jobs:
           bench new-site --db-root-password root --admin-password admin test_site
           bench --site test_site install-app erpnext
           bench --site test_site install-app bid_management
+          bench --site test_site migrate
           bench build
         env:
           CI: 'Yes'
