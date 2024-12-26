@@ -68,6 +68,7 @@
    "search_index": 1
   },
   {
+   "default": "EMD-",
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "hidden": 1,
@@ -419,7 +420,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-12-25 21:53:26.768378",
+ "modified": "2024-12-26 15:14:29.044794",
  "modified_by": "Administrator",
  "module": "Bid Management",
  "name": "EMD",
