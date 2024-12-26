@@ -1,4 +1,4 @@
-# Copyright (c) 2023, FinByz and Contributors
+# Copyright (c) 2024, Himanshu Shivhare and Contributors
 # See license.txt
 
 # import frappe

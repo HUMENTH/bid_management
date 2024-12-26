@@ -1,10 +1,9 @@
 {
  "actions": [],
+ "allow_rename": 1,
  "autoname": "naming_series:",
- "creation": "2023-03-29 17:06:25.365483",
- "default_view": "List",
+ "creation": "2024-12-22 19:01:32.773804",
  "doctype": "DocType",
- "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "naming_series",
@@ -27,37 +26,47 @@
   "return_date",
   "interest_amount",
   "interest_account",
-  "column_break_5",
+  "column_break_pyti",
   "posting_date",
   "due_date",
   "company",
-  "tender_name",
+  "tender",
   "tender_no",
   "payment_mode",
   "reference_date",
   "is_opening",
   "send_weekly_reminder",
-  "description_section",
+  "reminder_setup_section",
   "receipient",
   "cc_to",
   "email_template",
   "invitation_message",
-  "address_and_contact",
+  "address_and_contact_section",
   "address",
   "address_display",
   "journal_entry",
   "return_journal_entry",
   "return_forfeited_entry",
-  "column_break_12",
+  "column_break_nczg",
   "contact_person",
   "contact_display",
   "contact_phone",
-  "contact_mobile",
-  "contact_email",
+  "mobile_number",
+  "email_address",
   "amended_from",
   "status"
  ],
  "fields": [
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Icon",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "EMD",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
@@ -69,7 +78,6 @@
    "fieldname": "customer",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "in_standard_filter": 1,
    "label": "Customer",
    "no_copy": 1,
    "options": "Customer",
@@ -95,7 +103,14 @@
    "fieldtype": "Link",
    "label": "Bank Account",
    "no_copy": 1,
-   "options": "Account"
+   "options": "Bank Account"
+  },
+  {
+   "fetch_from": "company.default_currency",
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency"
   },
   {
    "fieldname": "amount",
@@ -121,10 +136,18 @@
    "options": "Account"
   },
   {
+   "fetch_from": "company.cost_center",
+   "fetch_if_empty": 1,
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center"
+  },
+  {
+   "depends_on": "eval:doc.send_weekly_reminder==1",
    "fieldname": "reference_num",
    "fieldtype": "Data",
    "label": "Reference Num",
-   "mandatory_depends_on": "eval:doc.send_weekly_reminder==1",
    "no_copy": 1
   },
   {
@@ -137,10 +160,35 @@
   },
   {
    "allow_on_submit": 1,
+   "default": "0",
+   "depends_on": "eval:doc.docstatus == 1;",
+   "fieldname": "forfeited",
+   "fieldtype": "Check",
+   "label": "Forfeited",
+   "no_copy": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval:doc.forfeited==1",
+   "fieldname": "write_off_account",
+   "fieldtype": "Link",
+   "label": "Write Off Account",
+   "mandatory_depends_on": "eval:doc.forfeited==1",
+   "options": "Account"
+  },
+  {
+   "allow_on_submit": 1,
    "depends_on": "eval:doc.returned == 1 && doc.return_journal_entry",
    "fieldname": "cancel_return",
    "fieldtype": "Button",
    "label": "Cancel Return"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval:doc.forfeited == 1 && doc.return_forfeited_entry",
+   "fieldname": "cancel_forfeited",
+   "fieldtype": "Button",
+   "label": "Cancel Forfeited"
   },
   {
    "allow_on_submit": 1,
@@ -154,25 +202,25 @@
   {
    "allow_on_submit": 1,
    "depends_on": "eval:doc.returned == 1",
+   "fieldname": "return_date",
+   "fieldtype": "Date",
+   "label": "Return Date",
+   "mandatory_depends_on": "eval:doc.returned == 1"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval:doc.returned == 1  ",
    "fieldname": "interest_amount",
    "fieldtype": "Currency",
    "label": "Interest Amount",
    "options": "Company:company:default_currency"
   },
   {
-   "allow_on_submit": 1,
-   "depends_on": "eval:doc.returned == 1",
-   "fieldname": "interest_account",
-   "fieldtype": "Link",
-   "label": "Interest Account",
-   "options": "Account"
-  },
-  {
-   "fieldname": "column_break_5",
+   "default": "No",
+   "fieldname": "column_break_pyti",
    "fieldtype": "Column Break"
   },
   {
-   "default": "Today",
    "fieldname": "posting_date",
    "fieldtype": "Date",
    "label": "Posting Date"
@@ -191,9 +239,9 @@
    "options": "Company"
   },
   {
-   "fieldname": "tender_name",
+   "fieldname": "tender",
    "fieldtype": "Link",
-   "label": "Tender Name",
+   "label": "Tender",
    "no_copy": 1,
    "options": "Tender",
    "reqd": 1
@@ -208,12 +256,11 @@
   {
    "fieldname": "payment_mode",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Payment Mode",
-   "no_copy": 1,
-   "reqd": 1
+   "no_copy": 1
   },
   {
-   "default": "Today",
    "fieldname": "reference_date",
    "fieldtype": "Date",
    "label": "Reference Date"
@@ -227,14 +274,50 @@
   },
   {
    "allow_on_submit": 1,
-   "depends_on": "eval:doc.returned == 1",
-   "fieldname": "return_date",
-   "fieldtype": "Date",
-   "label": "Return Date",
-   "mandatory_depends_on": "eval:doc.returned == 1"
+   "default": "0",
+   "depends_on": "eval: doc.status == \"Due\"",
+   "fieldname": "send_weekly_reminder",
+   "fieldtype": "Check",
+   "label": "Send Weekly Reminder"
   },
   {
-   "fieldname": "address_and_contact",
+   "fieldname": "reminder_setup_section",
+   "fieldtype": "Section Break",
+   "label": "Reminder Setup"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval:doc.send_weekly_reminder == 1  ",
+   "fetch_from": "contact_person.email_id",
+   "fieldname": "receipient",
+   "fieldtype": "Data",
+   "label": "Receipient",
+   "mandatory_depends_on": "eval:doc.send_weekly_reminder==1"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval:doc.send_weekly_reminder==1",
+   "fieldname": "cc_to",
+   "fieldtype": "Data",
+   "label": "CC To"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval:doc.send_weekly_reminder == 1",
+   "fieldname": "email_template",
+   "fieldtype": "Link",
+   "label": "Email Template",
+   "options": "Email Template"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval:doc.send_weekly_reminder == 1",
+   "fieldname": "invitation_message",
+   "fieldtype": "Text Editor",
+   "label": "Reminder Message"
+  },
+  {
+   "fieldname": "address_and_contact_section",
    "fieldtype": "Section Break",
    "label": "Address and Contact"
   },
@@ -268,7 +351,16 @@
    "read_only": 1
   },
   {
-   "fieldname": "column_break_12",
+   "allow_on_submit": 1,
+   "fieldname": "return_forfeited_entry",
+   "fieldtype": "Link",
+   "label": "Return Forfeited Entry",
+   "no_copy": 1,
+   "options": "Journal Entry",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_nczg",
    "fieldtype": "Column Break"
   },
   {
@@ -278,7 +370,7 @@
    "options": "Contact"
   },
   {
-   "fetch_from": "contact_person.first_name",
+   "fetch_from": "contact_person.full_name",
    "fieldname": "contact_display",
    "fieldtype": "Small Text",
    "label": "Contact Display",
@@ -293,79 +385,17 @@
   },
   {
    "fetch_from": "contact_person.mobile_no",
-   "fieldname": "contact_mobile",
+   "fieldname": "mobile_number",
    "fieldtype": "Data",
    "label": "Mobile Number",
    "read_only": 1
   },
   {
    "fetch_from": "contact_person.email_id",
-   "fieldname": "contact_email",
+   "fieldname": "email_address",
    "fieldtype": "Data",
    "label": "Email Address",
    "read_only": 1
-  },
-  {
-   "fieldname": "cost_center",
-   "fieldtype": "Link",
-   "label": "Cost Center",
-   "options": "Cost Center"
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "EMD",
-   "print_hide": 1,
-   "read_only": 1
-  },
-  {
-   "allow_on_submit": 1,
-   "default": "0",
-   "depends_on": "eval:doc.docstatus == 1;",
-   "fieldname": "forfeited",
-   "fieldtype": "Check",
-   "label": "Forfeited",
-   "no_copy": 1
-  },
-  {
-   "depends_on": "eval:doc.forfeited==1",
-   "fieldname": "write_off_account",
-   "fieldtype": "Link",
-   "label": "Write Off Account",
-   "mandatory_depends_on": "eval:doc.forfeited==1",
-   "options": "Account"
-  },
-  {
-   "allow_on_submit": 1,
-   "default": "0",
-   "depends_on": "eval: doc.status == \"Due\"",
-   "fieldname": "send_weekly_reminder",
-   "fieldtype": "Check",
-   "label": "Send Weekly Reminder"
-  },
-  {
-   "allow_on_submit": 1,
-   "depends_on": "eval:doc.send_weekly_reminder==1",
-   "fieldname": "cc_to",
-   "fieldtype": "Data",
-   "label": "CC To"
-  },
-  {
-   "allow_on_submit": 1,
-   "depends_on": "eval:doc.send_weekly_reminder == 1",
-   "fieldname": "receipient",
-   "fieldtype": "Data",
-   "label": "Receipient",
-   "mandatory_depends_on": "eval:doc.send_weekly_reminder==1"
-  },
-  {
-   "allow_on_submit": 1,
-   "depends_on": "eval:doc.send_weekly_reminder == 1",
-   "fieldname": "invitation_message",
-   "fieldtype": "Text Editor",
-   "label": "Reminder Message"
   },
   {
    "allow_on_submit": 1,
@@ -378,56 +408,25 @@
    "read_only": 1
   },
   {
-   "fieldname": "description_section",
-   "fieldtype": "Section Break",
-   "label": "Reminder Setup"
-  },
-  {
    "allow_on_submit": 1,
-   "depends_on": "eval:doc.forfeited == 1 && doc.return_forfeited_entry",
-   "fieldname": "cancel_forfeited",
-   "fieldtype": "Button",
-   "label": "Cancel Forfeited"
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "return_forfeited_entry",
+   "depends_on": "eval:doc.returned == 1",
+   "fieldname": "interest_account",
    "fieldtype": "Link",
-   "label": "Return Forfeited Entry",
-   "no_copy": 1,
-   "options": "Journal Entry",
-   "read_only": 1
-  },
-  {
-   "allow_on_submit": 1,
-   "depends_on": "eval:doc.send_weekly_reminder == 1",
-   "fieldname": "email_template",
-   "fieldtype": "Link",
-   "label": "Email Template",
-   "options": "Email Template"
-  },
-  {
-   "default": "currency",
-   "fetch_from": "company.default_currency",
-   "fieldname": "currency",
-   "fieldtype": "Link",
-   "label": "Currency",
-   "options": "Currency",
-   "read_only": 1
+   "label": "Interest Account",
+   "options": "Account"
   }
  ],
+ "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-05 10:19:23.686639",
+ "modified": "2024-12-25 21:53:26.768378",
  "modified_by": "Administrator",
- "module": "EMD Management",
+ "module": "Bid Management",
  "name": "EMD",
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
-   "amend": 1,
-   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -439,27 +438,10 @@
    "share": 1,
    "submit": 1,
    "write": 1
-  },
-  {
-   "amend": 1,
-   "cancel": 1,
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Accounts Manager",
-   "share": 1,
-   "submit": 1,
-   "write": 1
   }
  ],
- "search_fields": "customer",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
- "title_field": "customer",
  "track_changes": 1
 }
